@@ -1,0 +1,298 @@
+/* --- Global Resets & Variables --- */
+:root {
+  --primary-color: #4a90e2;
+  --primary-hover-color: #357abd;
+  --background-color: #f4f7f6;
+  --card-background: #ffffff;
+  --text-color: #333333;
+  --subtle-text-color: #777777;
+  --border-color: #e0e0e0;
+  --success-color: #28a745;
+  --error-color: #dc3545;
+  --danger-hover-color: #c82333;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* --- Main Container & Tabs (Same as before) --- */
+.main-container {
+  width: 100%;
+  max-width: 800px;
+}
+.tab-nav {
+  display: flex;
+  margin-bottom: -1px;
+}
+.tab-button {
+  padding: 10px 20px;
+  border: 1px solid var(--border-color);
+  background-color: #f9f9f9;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  border-bottom: none;
+  border-radius: 8px 8px 0 0;
+  transition: background-color 0.3s;
+  color: var(--subtle-text-color);
+}
+.tab-button.active {
+  background-color: var(--card-background);
+  color: var(--primary-color);
+  border-bottom: 1px solid var(--card-background);
+}
+.tab-content {
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 0 8px 8px 8px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+}
+.tab-panel {
+  display: none;
+}
+.tab-panel.active {
+  display: block;
+}
+
+/* --- Shared Card Elements (Same as before) --- */
+.uploader-card,
+.settings-card {
+  text-align: center;
+}
+h1 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--subtle-text-color);
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+/* --- Uploader Panel (Same as before, no changes needed) --- */
+.file-label {
+  background-color: #fafafa;
+  border: 2px dashed var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, border-color 0.3s;
+  font-weight: 500;
+  color: var(--primary-color);
+  display: block;
+  margin: 15px 0;
+}
+.file-label:hover {
+  background-color: #e9f0f8;
+  border-color: var(--primary-color);
+}
+#file-info-container {
+  font-size: 0.9rem;
+  color: var(--subtle-text-color);
+  margin: 15px 0;
+}
+#preview-container img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  margin-top: 10px;
+  border: 1px solid var(--border-color);
+}
+#submit-btn {
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+#submit-btn:hover:not(:disabled) {
+  background-color: var(--primary-hover-color);
+  transform: translateY(-2px);
+}
+#submit-btn:disabled {
+  background-color: #a0c3e8;
+  cursor: not-allowed;
+}
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top: 3px solid #fff;
+  width: 18px;
+  height: 18px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+#result-container {
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  text-align: left;
+  display: none;
+}
+#result-container.success {
+  display: block;
+  background-color: #e9f6ec;
+  color: var(--success-color);
+  border: 1px solid #c3e6cb;
+}
+#result-container.error {
+  display: block;
+  background-color: #f8d7da;
+  color: var(--error-color);
+  border: 1px solid #f5c6cb;
+}
+
+/* --- Settings Panel --- */
+.settings-columns {
+  display: flex;
+  gap: 30px;
+  text-align: left;
+}
+.settings-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.settings-column h3 {
+  margin-bottom: 10px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.item-list-container,
+.checklist-container {
+  max-height: 300px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+.item-list-container::-webkit-scrollbar,
+.checklist-container::-webkit-scrollbar {
+  width: 5px;
+}
+.item-list-container::-webkit-scrollbar-thumb,
+.checklist-container::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 10px;
+}
+
+/* Mess List (Left Column) */
+.mess-item {
+  padding: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.mess-item:hover {
+  background-color: #f0f0f0;
+}
+.mess-item.selected {
+  background-color: var(--primary-color);
+  border-color: var(--primary-hover-color);
+  color: white;
+  font-weight: 500;
+}
+
+/* Service Creation (Right Column) */
+.service-creator {
+  display: flex;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+.service-creator input {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+}
+.service-creator button {
+  padding: 8px 15px;
+  border: none;
+  background-color: var(--success-color);
+  color: white;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+.service-creator button:hover {
+  background-color: #218838;
+}
+
+/* Service Checklist (Right Column) */
+.checklist-container.disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+.service-check-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 5px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+.service-check-item:hover {
+  background-color: #f0f0f0;
+}
+.service-check-item label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  flex-grow: 1;
+}
+.service-check-item input[type="checkbox"] {
+  margin-right: 10px;
+  accent-color: var(--primary-color);
+}
+
+.delete-btn {
+  background: none;
+  border: none;
+  color: var(--subtle-text-color);
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0 5px;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.delete-btn:hover {
+  color: var(--error-color);
+}

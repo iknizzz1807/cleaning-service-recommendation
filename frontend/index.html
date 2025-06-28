@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Uploader & Settings</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- Tab Navigation -->
+      <div class="tab-nav">
+        <button class="tab-button active" data-tab="uploader">Uploader</button>
+        <button class="tab-button" data-tab="settings">Settings</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Uploader Panel -->
+        <div id="uploader-panel" class="tab-panel active">
+          <div class="uploader-card">
+            <h1>File Uploader</h1>
+            <p class="subtitle">Select a file and click upload</p>
+            <input
+              type="file"
+              id="file-input"
+              accept=".txt, .jpg, .png"
+              hidden
+            />
+            <label for="file-input" class="file-label">Choose File</label>
+            <div id="file-info-container">
+              <span id="file-name">No file chosen</span>
+            </div>
+            <div id="preview-container"></div>
+            <button id="submit-btn">
+              <span class="btn-text">Upload</span>
+              <div class="spinner" hidden></div>
+            </button>
+            <div id="result-container"></div>
+          </div>
+        </div>
+
+        <!-- Settings Panel -->
+        <div id="settings-panel" class="tab-panel">
+          <div class="settings-card">
+            <h1>Mess Configuration</h1>
+            <p class="subtitle">
+              Select a mess type, then assign services to it.
+            </p>
+            <div class="settings-columns">
+              <!-- Mess Types Column -->
+              <div class="settings-column">
+                <h3>Mess Types</h3>
+                <div id="mess-list-container" class="item-list-container">
+                  <!-- Mess types will be dynamically inserted here -->
+                </div>
+              </div>
+              <!-- Services Column -->
+              <div class="settings-column">
+                <h3>Services</h3>
+                <div class="service-creator">
+                  <input
+                    type="text"
+                    id="new-service-input"
+                    placeholder="Enter new service name"
+                  />
+                  <button id="add-service-btn">Create</button>
+                </div>
+                <div
+                  id="service-checklist-container"
+                  class="checklist-container"
+                >
+                  <!-- Service checkboxes will be listed here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
