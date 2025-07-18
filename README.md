@@ -1,4 +1,4 @@
-# cleaning-service-reccomendation
+# cleaning-service-recommendation
 An AI-powered web application that analyzes an image of a room, detects various types of messes, and recommends appropriate cleaning services. The system features a customizable mapping between detected messes and the services offered.
 
 ## About The Project
