@@ -18,6 +18,8 @@
       <div class="tab-nav">
         <button class="tab-button active" data-tab="uploader">Uploader</button>
         <button class="tab-button" data-tab="settings">Settings</button>
+        <!-- NEW TAB BUTTON -->
+        <button class="tab-button" data-tab="scoring">Scoring & Ranking</button>
       </div>
 
       <!-- Tab Content -->
@@ -54,14 +56,10 @@
               Select a mess type, then assign services to it.
             </p>
             <div class="settings-columns">
-              <!-- Mess Types Column -->
               <div class="settings-column">
                 <h3>Mess Types</h3>
-                <div id="mess-list-container" class="item-list-container">
-                  <!-- Mess types will be dynamically inserted here -->
-                </div>
+                <div id="mess-list-container" class="item-list-container"></div>
               </div>
-              <!-- Services Column -->
               <div class="settings-column">
                 <h3>Services</h3>
                 <div class="service-creator">
@@ -75,9 +73,94 @@
                 <div
                   id="service-checklist-container"
                   class="checklist-container"
-                >
-                  <!-- Service checkboxes will be listed here -->
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- NEW SCORING & RANKING PANEL -->
+        <div id="scoring-panel" class="tab-panel">
+          <div class="settings-card">
+            <h1>Scoring & Ranking Rules</h1>
+            <p class="subtitle">
+              Customize how service scores are calculated and ranked.
+            </p>
+            <div class="scoring-sections-container">
+              <!-- Section 1: Score Calculation Method -->
+              <div class="scoring-section">
+                <h3>1. Score Aggregation Method</h3>
+                <p class="section-description">
+                  Choose the formula to calculate a service's score based on the
+                  confidence of its related messes.
+                </p>
+                <div id="scoring-method-container">
+                  <label class="scoring-method-option">
+                    <input
+                      type="radio"
+                      name="score-method"
+                      value="average"
+                      checked
+                    />
+                    <span
+                      ><strong>Average Confidence (Default):</strong> Score is
+                      the average confidence of all detected messes.</span
+                    >
+                  </label>
+                  <label class="scoring-method-option">
+                    <input type="radio" name="score-method" value="max" />
+                    <span
+                      ><strong>Maximum Confidence:</strong> Score is the highest
+                      confidence of any single detected mess.</span
+                    >
+                  </label>
+                  <label class="scoring-method-option">
+                    <input type="radio" name="score-method" value="sum" />
+                    <span
+                      ><strong>Sum of Confidence:</strong> Score is the total
+                      sum of confidences. Rewards services linked to many
+                      messes.</span
+                    >
+                  </label>
+                  <label class="scoring-method-option">
+                    <input type="radio" name="score-method" value="count" />
+                    <span
+                      ><strong>Detection Count:</strong> Score is simply the
+                      number of messes detected for that service.</span
+                    >
+                  </label>
                 </div>
+              </div>
+
+              <!-- Section 2: Mess Severity -->
+              <div class="scoring-section">
+                <h3>2. Mess Type Severity (Weighting)</h3>
+                <p class="section-description">
+                  Assign a weight to each mess type. A higher weight means it
+                  contributes more to the final score.
+                </p>
+                <div
+                  id="mess-severity-list-container"
+                  class="item-list-container"
+                >
+                  <!-- Severity sliders will be dynamically inserted here -->
+                </div>
+              </div>
+
+              <!-- Section 3: Final Sorting -->
+              <div class="scoring-section">
+                <h3>3. Final Ranking Order</h3>
+                <p class="section-description">
+                  How should the final list of suggested services be sorted?
+                </p>
+                <select id="sorting-rule-select" class="custom-select">
+                  <option value="score_desc" selected>
+                    By Highest Score (Recommended)
+                  </option>
+                  <option value="score_asc">By Lowest Score</option>
+                  <option value="alpha_asc">Alphabetically (A-Z)</option>
+                  <option value="alpha_desc">Alphabetically (Z-A)</option>
+                </select>
               </div>
             </div>
           </div>

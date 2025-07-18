@@ -27,6 +27,8 @@ document.addEventListener("DOMContentLoaded", () => {
   let messAssignments = {}; // e.g., { "dirty_floor": ["Standard Cleaning"], "messy_bed": ["Standard Cleaning"] }
   let activeMess = null;
 
+  // --- DOM ELEMENT SELECTORS ---
+  // Uploader
   const fileInput = document.getElementById("file-input");
   const submitButton = document.getElementById("submit-btn");
   const fileNameDisplay = document.getElementById("file-name");
@@ -34,8 +36,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultContainer = document.getElementById("result-container");
   const btnText = document.querySelector(".btn-text");
   const spinner = document.querySelector(".spinner");
+
+  // Tabs
   const tabButtons = document.querySelectorAll(".tab-button");
   const tabPanels = document.querySelectorAll(".tab-panel");
+
+  // Settings Panel
   const messListContainer = document.getElementById("mess-list-container");
   const newServiceInput = document.getElementById("new-service-input");
   const addServiceBtn = document.getElementById("add-service-btn");
@@ -43,26 +49,30 @@ document.addEventListener("DOMContentLoaded", () => {
     "service-checklist-container"
   );
 
+  // --- NEW: Scoring & Ranking Panel Selectors ---
+  const messSeverityListContainer = document.getElementById(
+    "mess-severity-list-container"
+  );
+
   function init() {
     initializeMessAssignments();
     setupEventListeners();
     renderMessList();
     renderServiceChecklist();
+    renderSeverityList(); // <-- NEW: Render the new scoring UI
   }
 
   function initializeMessAssignments() {
-    // 1. Xóa các trạng thái cũ
     allServices.clear();
     messAssignments = {};
 
-    // 2. Nạp các dịch vụ và gán mặc định
     for (const mess in DEFAULT_MESS_ASSIGNMENTS) {
       const service = DEFAULT_MESS_ASSIGNMENTS[mess];
-      allServices.add(service); // Thêm dịch vụ vào set chung
+      allServices.add(service);
       if (!messAssignments[mess]) {
         messAssignments[mess] = [];
       }
-      messAssignments[mess].push(service); // Gán dịch vụ cho mess
+      messAssignments[mess].push(service);
     }
 
     MESS_TYPES.forEach((mess) => {
@@ -86,6 +96,8 @@ document.addEventListener("DOMContentLoaded", () => {
       "click",
       handleServiceInteraction
     );
+    // --- NEW: Event listener for the severity list container ---
+    messSeverityListContainer.addEventListener("input", handleSeverityChange);
   }
 
   function handleTabSwitch(targetTab) {
@@ -96,6 +108,8 @@ document.addEventListener("DOMContentLoaded", () => {
       button.classList.toggle("active", button.dataset.tab === targetTab)
     );
   }
+
+  // --- RENDER FUNCTIONS ---
 
   function renderMessList() {
     messListContainer.innerHTML = "";
@@ -120,7 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    // Chuyển Set thành Array và sort để thứ tự ổn định
     const sortedServices = Array.from(allServices).sort();
 
     sortedServices.forEach((serviceName) => {
@@ -129,17 +142,34 @@ document.addEventListener("DOMContentLoaded", () => {
       const item = document.createElement("div");
       item.className = "service-check-item";
       item.innerHTML = `
-                <label>
-                    <input type="checkbox" data-service="${serviceName}" ${
+        <label>
+          <input type="checkbox" data-service="${serviceName}" ${
         isChecked ? "checked" : ""
       }>
-                    <span>${serviceName}</span>
-                </label>
-                <button class="delete-btn" data-service-delete="${serviceName}" title="Delete Service">×</button>
-            `;
+          <span>${serviceName}</span>
+        </label>
+        <button class="delete-btn" data-service-delete="${serviceName}" title="Delete Service">×</button>
+      `;
       serviceChecklistContainer.appendChild(item);
     });
   }
+
+  // --- NEW: Function to render the mess severity list ---
+  function renderSeverityList() {
+    messSeverityListContainer.innerHTML = "";
+    MESS_TYPES.forEach((mess) => {
+      const item = document.createElement("div");
+      item.className = "severity-item";
+      item.innerHTML = `
+        <span class="mess-name">${mess.replace(/_/g, " ")}</span>
+        <input type="range" min="0.5" max="2" value="1" step="0.1" data-mess-severity="${mess}">
+        <span class="severity-value">1.0</span>
+      `;
+      messSeverityListContainer.appendChild(item);
+    });
+  }
+
+  // --- EVENT HANDLERS ---
 
   function handleSelectMess(event) {
     const messItem = event.target.closest(".mess-item");
@@ -191,6 +221,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // --- NEW: Event handler for severity slider changes ---
+  function handleSeverityChange(event) {
+    const slider = event.target;
+    if (slider.matches('input[type="range"]')) {
+      const valueDisplay = slider.nextElementSibling;
+      if (valueDisplay && valueDisplay.classList.contains("severity-value")) {
+        valueDisplay.textContent = parseFloat(slider.value).toFixed(1);
+      }
+    }
+  }
+
   // --- API INTERACTION ---
   function getServiceCentricPayload() {
     const payload = {};
@@ -204,13 +245,30 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     }
-    // Lọc ra các service không được gán cho mess nào
     for (const service in payload) {
       if (payload[service].length === 0) {
         delete payload[service];
       }
     }
     return payload;
+  }
+
+  // --- NEW: Function to get scoring & ranking settings (for future use) ---
+  function getScoringAndRankingSettings() {
+    const method = document.querySelector(
+      'input[name="score-method"]:checked'
+    ).value;
+    const sortingRule = document.getElementById("sorting-rule-select").value;
+    const severities = {};
+    document.querySelectorAll("[data-mess-severity]").forEach((slider) => {
+      severities[slider.dataset.messSeverity] = parseFloat(slider.value);
+    });
+
+    return {
+      method,
+      severities,
+      sortingRule,
+    };
   }
 
   function handleFileSelect(event) {
@@ -246,7 +304,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const servicesPayload = getServiceCentricPayload();
     formData.append("services", JSON.stringify(servicesPayload));
 
+    // For future implementation: you can send these settings to the backend
+    const scoringSettings = getScoringAndRankingSettings();
+    // formData.append("scoring_settings", JSON.stringify(scoringSettings));
     console.log("Sending payload:", servicesPayload);
+    console.log(
+      "Current Scoring/Ranking Settings (for demo):",
+      scoringSettings
+    );
 
     try {
       const response = await fetch("http://localhost:8000/api", {
@@ -268,6 +333,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
+  // --- UI STATE & DISPLAY FUNCTIONS ---
+
   function showLoadingState(isLoading) {
     submitButton.disabled = isLoading;
     spinner.hidden = !isLoading;
@@ -277,19 +344,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Cập nhật hàm hiển thị kết quả để sắp xếp và hiển thị score
   function displayResult(data) {
     resultContainer.className = "result-container success";
 
     let servicesHTML = "<p>No specific services required.</p>";
 
     if (data.services_needed && data.services_needed.length > 0) {
-      // 1. Sắp xếp danh sách dịch vụ theo 'score' giảm dần
       const sortedServices = data.services_needed.sort(
         (a, b) => b.score - a.score
       );
 
-      // 2. Tạo HTML, hiển thị cả tên dịch vụ và điểm số
       servicesHTML = `<ul>${sortedServices
         .map(
           (s) =>
