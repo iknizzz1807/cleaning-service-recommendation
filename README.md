@@ -93,7 +93,11 @@ Follow these instructions to set up and run the project locally.
     *   Choose an image file and click **Upload**.
     *   The results will appear below, showing the suggested services and the processed image.
 
-## Screenshots of the app 
+## Screenshots and videos of the app 
 ![image](https://github.com/user-attachments/assets/73f81ae4-e5cf-4a62-8b4e-7e67fb67fc78)
 ![image](https://github.com/user-attachments/assets/4597e25a-2c30-4e21-b88a-8d30797be880)
+
+https://github.com/user-attachments/assets/15ef0a14-ea91-49ae-b9f0-8f0806a9fd9c
+
+
 - Request for training weight: mythonggg@gmail.com
