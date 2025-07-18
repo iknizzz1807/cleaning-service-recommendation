@@ -5,6 +5,16 @@ An AI-powered web application that analyzes an image of a room, detects various 
 
 This project uses a multi-stage AI pipeline to provide intelligent cleaning recommendations. A user uploads an image, and the backend processes it to identify and classify messes. The frontend then displays the annotated image along with a ranked list of suggested services, which can be configured by the user.
 
+## Members
+
+| Full Name                  | Student ID      | 
+| -------------------- | --------------- |
+| Nguyễn Mỹ Thống               | 23521527        |
+| Trần Tuấn Kiệt               | 23520822        |
+| Nguyễn Thắng Lợi     | 23520872        |
+| Võ Anh Kiệt  | 23520825        |
+| Lê Phú Quý                      | 23521316        |
+
 ### Key Features
 
 *   **AI-Powered Mess Detection:** Utilizes a custom pipeline:
@@ -83,7 +93,11 @@ Follow these instructions to set up and run the project locally.
     *   Choose an image file and click **Upload**.
     *   The results will appear below, showing the suggested services and the processed image.
 
-## Screenshots of the app 
+## Screenshots and videos of the app 
 ![image](https://github.com/user-attachments/assets/73f81ae4-e5cf-4a62-8b4e-7e67fb67fc78)
 ![image](https://github.com/user-attachments/assets/4597e25a-2c30-4e21-b88a-8d30797be880)
+
+https://github.com/user-attachments/assets/15ef0a14-ea91-49ae-b9f0-8f0806a9fd9c
+
+
 - Request for training weight: mythonggg@gmail.com
