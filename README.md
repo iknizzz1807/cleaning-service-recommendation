@@ -2,8 +2,9 @@
 An AI-powered web application that analyzes an image of a room, detects various types of messes, and recommends appropriate cleaning services. The system features a customizable mapping between detected messes and the services offered.
 
 ## About The Project
+- This project is the final assignment for the "Computational Thinking" course (CS117.P22), carried out by the group 26th under the supervision of Mr. Ngo Duc Thanh.
 
-This project uses a multi-stage AI pipeline to provide intelligent cleaning recommendations. A user uploads an image, and the backend processes it to identify and classify messes. The frontend then displays the annotated image along with a ranked list of suggested services, which can be configured by the user.
+- This project uses a multi-stage AI pipeline to provide intelligent cleaning recommendations. A user uploads an image, and the backend processes it to identify and classify messes. The frontend then displays the annotated image along with a ranked list of suggested services, which can be configured by the user.
 
 ## Members
 
@@ -97,7 +98,11 @@ Follow these instructions to set up and run the project locally.
 ![image](https://github.com/user-attachments/assets/73f81ae4-e5cf-4a62-8b4e-7e67fb67fc78)
 ![image](https://github.com/user-attachments/assets/4597e25a-2c30-4e21-b88a-8d30797be880)
 
-https://github.com/user-attachments/assets/15ef0a14-ea91-49ae-b9f0-8f0806a9fd9c
+
+
+
+https://github.com/user-attachments/assets/b77f6240-f0ae-4286-bead-3e96fc000821
+
 
 
 - Request for training weight: mythonggg@gmail.com
